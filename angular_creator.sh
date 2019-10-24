@@ -1,5 +1,3 @@
-!#/bin/bash
-
 read -p "Project Name?: " project
 read -p "Bootswatch Theme? [Y/n]: " themeRes
 if [[ -z ${themeRes} || ${themeRes} == 'Y' || ${themeRes} == 'y' ]]; then
@@ -12,7 +10,7 @@ echo -e "Updating angular-CLI..."
 npm install -g @angular/cli@latest > /dev/null 2>&1
 
 echo -e "Creating the Angular App ${project}... Please, be patient, it might take a while."
-ng add ${project} > /dev/null 2>&1
+ng new ${project} > /dev/null 2>&1
 
 echo -e "Adding Bootstrap..."
 npm install bootstrap

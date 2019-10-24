@@ -5,7 +5,8 @@
 #### Generate a new Angular App
 
 - [ ] npm install -g @angular/cli@latest
-- [ ] ng add \${project}
+- [ ] ng new \${project}
+- [ ] cd \${project}
 
 #### Add Bootstrap
 
@@ -25,8 +26,8 @@
 - [ ] npm install jest
 - [ ] touch jest.config.js
 - [ ] echo -e "module.exports = {\n\tpreset: 'jest-preset-angular',\n\tsetupFilesAfterEnv: ['<rootDir>/src/setupJest.ts'],\n\tsetupFiles: ['jest-canvas-mock'],\n\tcoverageReporters: ['text', 'html'],\n\tcoveragePathIgnorePatterns: [\n\t\t'/node_modules/'\n\t],\n\ttransformIgnorePatterns: ['node_modules/(?"'!'"(ng2-charts-x)/)']\n};" > jest.config.js
-- [ ] sed -i 's/"test": "ng test",/"test": "jest --coverage",\n\t\t"test:w": "jest --coverage --watch",/g' package.json
+- [ ] sed -i 's/"test": "ng test",/"test": "jest --coverage",\n\t\t"test:w": "jest --coverage --watch",/g' jest.config.js
 - [ ] rm karma.conf.js
-- [ ] sed -i '/\"test\"/,/},/ d; /^\$/d' 1.a
+- [ ] sed -i '/\"test\"/,/},/ d; /^\$/d' angular.json
 - [ ] touch src/setupJest.ts
 - [ ] echo "import 'jest-preset-angular';" > src/setupJest.ts

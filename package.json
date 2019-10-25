@@ -1,0 +1,32 @@
+{
+  "name": "angular_app_creator",
+  "version": "1.0.0",
+  "description": "Create an up to date Angular App with some options (bootstrap, font-awesome, etc.)",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nesci28/Angular_Creator.git"
+  },
+  "keywords": [
+    "angular",
+    "generator",
+    "boostrap",
+    "bootswatch",
+    "font-awesome"
+  ],
+  "author": "Marc Gagnon",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Nesci28/Angular_Creator/issues"
+  },
+  "homepage": "https://github.com/Nesci28/Angular_Creator#readme",
+  "dependencies": {
+    "bootstrap": "^4.3.1",
+    "chalk": "^2.4.2",
+    "inquirer": "^7.0.0",
+    "rimraf": "^3.0.0"
+  }
+}

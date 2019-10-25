@@ -1,5 +1,16 @@
 # Angular App
 
+### How to Use
+
+```
+npm install
+node app.js
+or
+./angular_creator.sh
+```
+
+#### Manual Guide
+
 - [ ] project=name_of_the_project
 - [ ] routing=--routing=true
 - [ ] testing=--skipTests=false
@@ -25,7 +36,6 @@
 - [ ] echo '@import "~bootstrap/scss/bootstrap";' >> src/styles.scss
 - [ ] echo '@import "~bootswatch/dist/'\${theme}'/bootswatch";' >> src/styles.scss
 
-
 #### Change Karma/Jasmine to Jest
 
 - [ ] npm uninstall karma karma-chrome-launcher karma-coverage-istanbul-reporter karma-jasmine karma-jasmine-html-reporter @types/jasmine @types/jasminewd2 jasmine-core jasmine-spec-reporter protractor
@@ -37,9 +47,9 @@
 - [ ] rm karma.conf.js
 - [ ] rm src/test.ts
 - [ ] rm -r e2e
-- [ ] sed -i '/\"types\"/,/]/ d; /^$/d' tsconfig.spec.json
+- [ ] sed -i '/\"types\"/,/]/ d; /^\$/d' tsconfig.spec.json
 - [ ] sed -i 's/"target": "es5",/"target": "es5",\n\t\t"types": ["node"],/' tsconfig.spec.json
-- [ ] sed -i '/\"files\"/,/]/ d; /^$/d' tsconfig.spec.json
+- [ ] sed -i '/\"files\"/,/]/ d; /^\$/d' tsconfig.spec.json
 - [ ] sed -i 's/},/},\n\t"files": ["polyfills.ts"],/' tsconfig.spec.json
 - [ ] sed -i '/\"test\"/,/},/ d; /^\$/d' angular.json
 - [ ] touch src/setupJest.ts
@@ -51,7 +61,11 @@
 - [ ] cp ../tslint_src.json src/tslint.json
 
 #### Guide
+
 ```html
 To add an icon:
-<i class="fa fa-american-sign-language-interpreting fa-5x" aria-hidden="true"></i>
+<i
+  class="fa fa-american-sign-language-interpreting fa-5x"
+  aria-hidden="true"
+></i>
 ```

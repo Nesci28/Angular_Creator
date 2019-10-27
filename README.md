@@ -69,3 +69,8 @@ To add an icon:
   aria-hidden="true"
 ></i>
 ```
+
+#### Todo
+
+- [ ] Option to use Yarn instead of Npm
+- [ ] Option to add Material to the project

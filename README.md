@@ -74,3 +74,6 @@ To add an icon:
 
 - [ ] Option to use Yarn instead of Npm
 - [ ] Option to add Material to the project
+  - [ ] Choose which theme
+  - [ ] Help creating a Custom theme
+- [ ] Option to add HammerJS

@@ -1,5 +1,7 @@
 # Angular App
 
+The shell version is not up to date with all the new options
+
 ### How to Use
 
 ```
@@ -72,8 +74,10 @@ To add an icon:
 
 #### Todo
 
+- [x] Angular Version picker
 - [ ] Option to use Yarn instead of Npm
-- [ ] Option to add Material to the project
-  - [ ] Choose which theme
+- [x] Option to add Material to the project
+  - [x] Choose which theme
   - [ ] Help creating a Custom theme
-- [ ] Option to add HammerJS
+- [x] Option to add Material Design for Bootstrap to the project
+- [x] Option to add HammerJS

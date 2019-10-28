@@ -1,6 +1,7 @@
 const inquirer = require('inquirer');
 const clk = require('chalk');
 const rimraf = require('rimraf');
+const prependFile = require('prepend-file');
 
 const fs = require('fs');
 const cp = require('child_process');
@@ -125,6 +126,16 @@ const tslint = {
   }
   const answers = await inquirer.prompt([
     {
+      type: 'list',
+      name: 'version',
+      message: 'Which Angular Version ? 💂 ',
+      choices: ['5', '6', '7', '8', 'latest'],
+      default: 'latest',
+      filter: t => {
+        return t === '5' ? '1' : t;
+      },
+    },
+    {
       type: 'text',
       name: 'name',
       message: 'Project Name? 🤔 (non alpha characters will be stripped out)\n',
@@ -140,21 +151,32 @@ const tslint = {
     },
     {
       type: 'confirm',
-      name: 'testing',
-      message: 'Do you want Testing? ☢️ ',
-      default: true,
-    },
-    {
-      type: 'confirm',
       name: 'fontAwesome',
       message: 'Font Awesome icons? ⛳ ',
       default: true,
+    },
+    {
+      type: 'list',
+      name: 'themeFrame',
+      message: 'Which framework theme do you want? ✒️',
+      choices: [
+        'Bootstrap',
+        'Material',
+        'MDB (Material Design for Bootstrap)',
+        'None',
+      ],
+      filter: t => {
+        return t === 'MDB (Material Design for Bootstrap)' ? 'MDB' : t;
+      },
     },
     {
       type: 'confirm',
       name: 'themeRes',
       message: 'Bootswatch Theme? 🎒 ',
       default: true,
+      when: answers => {
+        return answers.themeFrame === 'Boostrap';
+      },
     },
     {
       type: 'list',
@@ -192,17 +214,50 @@ const tslint = {
     },
     {
       type: 'list',
+      name: 'materialTheme',
+      message: 'Which Material Theme ? 📝 ',
+      choices: [
+        'deeppurple-amber',
+        'indigo-pink',
+        'pink-bluegrey',
+        'purple-green',
+        'custom',
+      ],
+      when: answers => {
+        return answers.themeFrame === 'Material';
+      },
+    },
+    {
+      type: 'list',
       name: 'framework',
       message: 'Which CSS Framework ? 🎖️ ',
       choices: ['scss', 'css', 'sass', 'less', 'styl'],
       default: 'scss',
       when: answers => {
-        if (!answers.themeRes && !answers.fontAwesome) {
-          return true;
-        } else {
-          return false;
-        }
+        return answers.themeFrame === 'None';
       },
+    },
+    {
+      type: 'confirm',
+      name: 'testing',
+      message: 'Do you want Testing? ☢️ ',
+      default: true,
+    },
+    {
+      type: 'confirm',
+      name: 'testFrame',
+      message:
+        'Do you want to user Jest instead of Karma/Jasmine/Protactor ? ⚙️ ',
+      default: true,
+      when: answers => {
+        return answers.testing;
+      },
+    },
+    {
+      type: 'confirm',
+      name: 'hammer',
+      message: 'Do you want to install HammerJS ? 🔨 ',
+      default: true,
     },
   ]);
   let angularNewCommand = `ng new ${answers.name}`;
@@ -214,37 +269,70 @@ const tslint = {
     angularNewCommand += ` --style=${answers.framework}`;
   }
 
-  printMsg('Updating Angular-CLI...');
-  cp.execSync(`npm install -g @angular/cli@latest > ${toNull}`);
-  printDone('Updating Angular-CLI...');
-
-  printMsg('Creating the Angular App ...');
-  cp.execSync(`${angularNewCommand} > ${toNull}`);
-  process.chdir(path.join(__dirname, answers.name));
-  printDone('Creating the Angular App ...');
-
-  printMsg('Installing Bootstrap...');
-  cp.execSync(`npm install bootstrap > ${toNull}`);
-  cp.execSync(`ng add ngx-bootstrap > ${toNull}`);
-  printDone('Installing Bootstrap...');
-
-  if (answers.themRes) {
-    printMsg('Installing Bootswatch...');
-    cp.execSync(`npm install bootswatch > ${toNull}`);
-    fs.writeFileSync(
-      'src/styles.scss',
-      `@import "~bootswatch/dist/${theme}/variables";`,
+  if (answers.version === 'latest') {
+    printMsg('Updating Angular-CLI...');
+    cp.execSync(`npm install -g @angular/cli@latest > ${toNull}`);
+    printDone('Updating Angular-CLI...');
+    printMsg('Creating the Angular App ...');
+    cp.execSync(`${angularNewCommand} > ${toNull}`);
+  } else {
+    printMsg('Installing NPX...');
+    cp.execSync(`npm install -g npx > ${toNull}`);
+    printDone('Installing NPX...');
+    printMsg('Creating the Angular App ...');
+    cp.execSync(
+      `npx -p @angular/cli@${answers.version} ${angularNewCommand} > ${toNull}`,
     );
-    fs.appendFileSync(
-      'src/styles.scss',
-      `@import "~bootstrap/scss/bootstrap";`,
-    );
-    fs.appendFileSync(
-      'src/styles.scss',
-      `@import "~bootswatch/dist/${theme}/bootswatch";`,
-    );
-    printDone('Installing Bootswatch...');
   }
+  printDone('Creating the Angular App ...');
+  process.chdir(path.join(__dirname, answers.name));
+
+  if (answers.themeFrame === 'Bootstrap') {
+    printMsg('Installing Bootstrap...');
+    cp.execSync(`npm install bootstrap > ${toNull}`);
+    cp.execSync(`ng add ngx-bootstrap > ${toNull}`);
+    printDone('Installing Bootstrap...');
+
+    if (answers.themRes) {
+      printMsg('Installing Bootswatch...');
+      cp.execSync(`npm install bootswatch > ${toNull}`);
+      fs.writeFileSync(
+        'src/styles.scss',
+        `@import "~bootswatch/dist/${theme}/variables";`,
+      );
+      fs.appendFileSync(
+        'src/styles.scss',
+        `@import "~bootstrap/scss/bootstrap";`,
+      );
+      fs.appendFileSync(
+        'src/styles.scss',
+        `@import "~bootswatch/dist/${theme}/bootswatch";`,
+      );
+      printDone('Installing Bootswatch...');
+    }
+  }
+
+  if (answers.themeFrame === 'Material') {
+    printMsg('Installing Material...');
+    cp.execSync(`ng add @angular/material  > ${toNull}`);
+    printDone('Installing Material...');
+
+    if (answers.materialTheme !== 'custom') {
+      printMsg('Adding Material Theme...');
+      prependFile(
+        'src/styles.scss',
+        `@import '@angular/material/prebuilt-themes/${answers.materialTheme}.css';`,
+      );
+      printDone('Adding Material Theme...');
+    }
+  }
+
+  if (answers.themeFrame === 'MDB') {
+    printMsg('Installing Material for Bootstrap...');
+    cp.execSync('ng add angular-bootstrap-md');
+    printDone('Installing Material for Bootstrap...');
+  }
+
   if (answers.fontAwesome) {
     printMsg('Installing Font Awesome...');
     cp.execSync(`npm install font-awesome > ${toNull}`);
@@ -261,7 +349,7 @@ const tslint = {
     printDone('Installing Font Awesome...');
   }
 
-  if (answers.testing) {
+  if (answers.testFrame) {
     printMsg('Removing Karma and Jasmine...');
     cp.execSync(
       `npm uninstall karma karma-chrome-launcher karma-coverage-istanbul-reporter karma-jasmine karma-jasmine-html-reporter @types/jasmine @types/jasminewd2 jasmine-core jasmine-spec-reporter protractor > ${toNull}`,
@@ -313,6 +401,13 @@ const tslint = {
       fs.writeFile('tsconfig.spec.json', JSON.stringify(data, null, 2));
     });
     printDone('Configuring Jest...');
+  }
+
+  if (answers.hammer) {
+    printMsg('Installing HammerJS...');
+    cp.execSync(`npm install hammerjs > ${toNull}`);
+    prependFile('src/main.ts', "import 'hammerjs';", () => {});
+    printDone('Installing HammerJS...');
   }
 
   printMsg('Configuring TSLint...');

@@ -455,7 +455,7 @@ const tslint = {
       cp.execSync(`git remote add origin ${answers.gitLink}`);
       cp.execSync(`git add .`);
       cp.execSync(`git commit -m 'first commit'`);
-      cp.execSync(`git commit -m 'push'`);
+      cp.execSync(`git push`);
     }
     printDone('Linkining to git ...');
   }

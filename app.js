@@ -332,7 +332,8 @@ const tslint = {
       cp.execSync(`npm install bootswatch > ${toNull}`);
       fs.writeFileSync(
         'src/styles.scss',
-        `@import "~bootswatch/dist/${theme}/variables";`
+        `@import "~bootswatch/dist/${theme}/variables";`,
+        () => {}
       );
       fs.appendFileSync(
         'src/styles.scss',
@@ -378,7 +379,7 @@ const tslint = {
       data.projects[answers.name].architect.test.options.styles.push(
         './node_modules/font-awesome/scss/font-awesome.scss"'
       );
-      fs.writeFile('angular.json', JSON.stringify(data, null, 2));
+      fs.writeFile('angular.json', JSON.stringify(data, null, 2), () => {});
     });
     printDone('Installing Font Awesome...');
   }
@@ -405,7 +406,8 @@ const tslint = {
     };
     fs.writeFile(
       'jest.config.ts',
-      `module.exports = ${JSON.stringify(obj, null, 2)}`
+      `module.exports = ${JSON.stringify(obj, null, 2)}`,
+      () => {}
     );
     fs.readFile('package.json', (_, data) => {
       data = JSON.parse(data);
@@ -420,7 +422,7 @@ const tslint = {
           '<rootDir>/src/test.ts'
         ]
       };
-      fs.writeFile('package.json', JSON.stringify(data, null, 2));
+      fs.writeFile('package.json', JSON.stringify(data, null, 2), () => {});
     });
     fs.unlink('karma.conf.js', (_, __) => {});
     fs.unlink('src/test.js', (_, __) => {});
@@ -428,7 +430,7 @@ const tslint = {
     fs.readFile('angular.json', (_, data) => {
       data = JSON.parse(data);
       delete data.test;
-      fs.writeFile('angular.json', JSON.stringify(data, null, 2));
+      fs.writeFile('angular.json', JSON.stringify(data, null, 2), () => {});
     });
     printDone('Configuring Jest...');
   }
@@ -464,13 +466,13 @@ const tslint = {
     data.projects[answers.name].architect.build.options.styles.push(
       './node_modules/font-awesome/scss/font-awesome.scss"'
     );
-    fs.writeFile('tslint.json', JSON.stringify(data, null, 2));
+    fs.writeFile('tslint.json', JSON.stringify(data, null, 2), () => {});
   });
   fs.readFile('./src/tslint.json', (_, data) => {
     console.log(_);
     data = JSON.parse(data);
     data = tslintSrc;
-    fs.writeFile('src/tslint.json', JSON.stringify(data, null, 2));
+    fs.writeFile('src/tslint.json', JSON.stringify(data, null, 2), () => {});
   });
   printDone('Configuring TSLint...');
 

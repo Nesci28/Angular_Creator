@@ -1,4 +1,5 @@
 const inquirer = require('inquirer');
+inquirer.registerPrompt('directory', require('inquirer-select-directory'));
 const clk = require('chalk');
 const rimraf = require('rimraf');
 const prependFile = require('prepend-file');
@@ -144,9 +145,11 @@ const tslint = {
       }
     },
     {
-      type: 'text',
+      type: 'directory',
       name: 'path',
-      message: 'Do you want a specific path? if so please specify it: \n'
+      message:
+        'Do you want a specific directory? if so please specify it: 📁\n',
+      basePath: `${__dirname}`
     },
     {
       type: 'confirm',
@@ -267,25 +270,20 @@ const tslint = {
     {
       type: 'confirm',
       name: 'git',
-      message: 'Do you want to add a git repositorie ? :octocat: ',
+      message: 'Do you want to add a git repositorie ? ☁️ ',
       default: false
     },
     {
       type: 'text',
       name: 'gitLink',
-      message: 'Provide a git repositorie link(ended by .git)  ',
+      message: 'Provide a git repositorie link(ended by .git) 🔗 ',
       when: answers => {
-        return answers.git === true;
+        return answers.git;
       }
     }
   ]);
-  let pathFolder;
-  if (answers.path) {
-    pathFolder = answers.path;
-  } else {
-    pathFolder = __dirname;
-  }
-  process.chdir(pathFolder);
+
+  process.chdir(answers.path);
   let angularNewCommand = `ng new ${answers.name}`;
   if (answers.routing) angularNewCommand += ` --routing=true`;
   if (!answers.testing) angularNewCommand += ` --skipTests=true`;
@@ -293,6 +291,9 @@ const tslint = {
     angularNewCommand += ` --style=scss`;
   } else {
     angularNewCommand += ` --style=${answers.framework}`;
+  }
+  if (answers.git) {
+    angularNewCommand += ` --commit`;
   }
 
   if (answers.version === 'latest') {
@@ -304,13 +305,13 @@ const tslint = {
   } else {
     let version;
     try {
-      version = cp.execSync(`npx -version`);
+      version = cp.execSync(`npx -version`).toString();
     } catch (error) {
       printMsg('Installing NPX...');
       cp.execSync(`npm install -g npx > ${toNull}`);
       printDone('Installing NPX...');
     }
-    if (version && !!version.toString()) {
+    if (!!version) {
       printMsg('Creating the Angular App ...');
       cp.execSync(
         `npx -p @angular/cli@${answers.version} ${angularNewCommand} > ${toNull}`
@@ -319,7 +320,7 @@ const tslint = {
   }
 
   printDone('Creating the Angular App ...');
-  process.chdir(path.join(pathFolder, answers.name));
+  process.chdir(path.join(answers.path, answers.name));
 
   if (answers.themeFrame === 'Bootstrap') {
     printMsg('Installing Bootstrap...');
@@ -444,14 +445,13 @@ const tslint = {
 
   if (answers.git) {
     printMsg('Linkining to git...');
+    let version;
     try {
-      version = cp.execSync(`git --version`);
+      version = cp.execSync(`git --version`).toString();
     } catch (error) {
       printDone('git is not installed...');
     }
-    if (version && !!version.toString()) {
-      cp.execSync(`git init`);
-      fs.writeFile('./.gitignore', 'node_modules', () => {});
+    if (!!version) {
       cp.execSync(`git remote add origin ${answers.gitLink}`);
       cp.execSync(`git add .`);
       cp.execSync(`git commit -m 'first commit'`);

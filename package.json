@@ -1,7 +1,7 @@
 {
-  "name": "angular_app_creator",
+  "name": "angular-creator",
   "version": "1.0.0",
-  "description": "Create an up to date Angular App with some options (bootstrap, font-awesome, etc.)",
+  "description": "Generates an Angular App easily with some options (Bootstrap, Font-Awesome, Jest, etc.)",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -18,12 +18,13 @@
     "font-awesome"
   ],
   "author": "Marc Gagnon",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/Nesci28/Angular_Creator/issues"
   },
   "homepage": "https://github.com/Nesci28/Angular_Creator#readme",
   "dependencies": {
+    "axios": "^0.19.0",
     "bootstrap": "^4.3.1",
     "chalk": "^2.4.2",
     "inquirer": "^7.0.0",

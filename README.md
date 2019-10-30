@@ -1,23 +1,11 @@
 # Angular App
 
-`npm install -g angular-generator`
-
-### How to Use
-
 ```
-npm install
-node app.js
+to install: npm install -g angular-generator
+command to run: ag
 ```
 
-#### Guide
-
-```html
-To add an icon:
-<i
-  class="fa fa-american-sign-language-interpreting fa-5x"
-  aria-hidden="true"
-></i>
-```
+[![ex.png](https://i.postimg.cc/xdPgr6nR/ex.png)](https://postimg.cc/Mcv1VbcM)
 
 #### Todo
 
@@ -28,11 +16,9 @@ To add an icon:
   - [ ] Help creating a Custom theme
 - [x] Option to add Material Design for Bootstrap to the project
 - [x] Option to add HammerJS
-- [ ] Push to NPM
-- [ ] Option to create a new Git repo
-  - [ ] Choose between GitHub, BitBucket, GitLab, etc.
-- [ ] Option to push to an existing Git repo
-  - [ ] Select Repo from APIs
-    - https://gitlab.com/api/v4/users/:userId/projects
-    - https://api.github.com/users/:userId/repos
-    - https://api.bitbucket.org/2.0/repositories/:userId
+- [x] Push to NPM
+- [x] Option to create a new Git repo
+  - [x] GitHub
+  - [ ] Others.
+- [x] Option to push to an existing Git repo
+  - [x] Select Repo from APIs

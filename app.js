@@ -140,7 +140,7 @@ const tslint = {
       type: 'text',
       name: 'name',
       message:
-        'Project Name ? 🤔 (non alpha characters will be stripped out)\n',
+        'Project Name ? 🤔 ' + ' (non alpha characters will be stripped out)\n',
       filter: t => {
         return t.replace(/[^a-zA-Z-]/g, '');
       },
@@ -311,7 +311,7 @@ const tslint = {
       cp.execSync(`npm install -g npx > ${toNull}`);
       printDone('Installing NPX...');
     }
-    if (!!version) {
+    if (version) {
       printMsg('Creating the Angular App ...');
       cp.execSync(
         `npx -p @angular/cli@${answers.version} ${angularNewCommand} > ${toNull}`,

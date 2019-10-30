@@ -163,7 +163,7 @@ module.exports = async function() {
     {
       type: 'list',
       name: 'gitProvider',
-      message: 'Which Git provider are you using ? 🏆 ',
+      message: 'Which Git provider do you use ? 🏆 ',
       choices: ['GitHub', 'GitLab', 'BitBucket', 'Local'],
       default: 'GitHub',
       when: answers => {
@@ -180,11 +180,30 @@ module.exports = async function() {
       },
     },
     {
+      type: 'confirm',
+      name: 'gitNew',
+      message: 'Are you creating a new repo ? ✨ ',
+      default: true,
+      when: answers => {
+        return answers.gitProvider === 'GitHub';
+      },
+    },
+    {
       type: 'text',
       name: 'gitUsername',
-      message: 'What is your username on your Git provider ? 📛 ',
+      message: 'What is your Username on your Git provider ? 📛 ',
       when: answers => {
         return answers.git && answers.gitProvider !== 'Local';
+      },
+    },
+    {
+      type: 'password',
+      name: 'gitPassword',
+      message:
+        'What is your Password on your Git provider ? 🔑 ' +
+        ' (password is necessary to create a new Repo)',
+      when: answers => {
+        return answers.git && answers.gitProvider !== 'Local' && answers.gitNew;
       },
     },
   ]);

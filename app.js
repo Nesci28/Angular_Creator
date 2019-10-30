@@ -1,9 +1,10 @@
-const mainPrompt = require('./mainPrompt');
-const gitPrompt = require('./gitPrompt');
+const promptMain = require('./promptMain');
+const promptGit = require('./promptGit');
 
 const cmdAngular = require('./cmdAngular');
 const cmdTheme = require('./cmdTheme');
 const cmdTesting = require('./cmdTesting');
+const cmdGit = require('./cmdGit');
 
 const helpers = require('./helpers');
 
@@ -13,28 +14,32 @@ const fs = require('fs');
 const cp = require('child_process');
 
 (async () => {
-  const answers = await mainPrompt();
-  if (answers.git && answers.gitProvider === 'GitHub') {
-    gitPrompt.gitHub(answers.gitUsername);
+  const answers = await promptMain();
+
+  let gitName;
+  if (answers.git && answers.gitProvider === 'GitHub' && answers.gitNew) {
+    gitName = await promptGit.gitName(answers);
+    gitName = gitName.gitName;
   }
-  if (answers.git && answers.gitProvider === 'GitLab') {
-    gitPrompt.gitLab(answers.gitUsername);
+  let gitLink;
+  if (answers.git && answers.gitProvider === 'GitHub' && !answers.gitNew) {
+    gitLink = await promptGit.gitHub(answers.gitUsername);
   }
-  if (answers.git && answers.gitProvider === 'BitBucket') {
-    gitPrompt.bitbucket(answers.gitUsername);
+  if (answers.git && answers.gitProvider === 'GitLab' && !answers.gitNew) {
+    gitLink = await promptGit.gitLab(answers.gitUsername);
+  }
+  if (answers.git && answers.gitProvider === 'BitBucket' && !answers.gitNew) {
+    gitLink = await promptGit.bitbucket(answers.gitUsername);
   }
 
   const startTime = Date.now();
-  let toNull;
-  process.platform === 'win32'
-    ? (toNull = 'nul 2>&1')
-    : (toNull = '/dev/null 2>&1');
+  const toNull = process.platform === 'win32' ? 'nul 2>&1' : '/dev/null 2>&1';
 
   process.chdir(answers.path);
 
-  cmdAngular(answers);
-  cmdTheme(answers);
-  cmdTesting(answers);
+  cmdAngular(answers, toNull);
+  cmdTheme(answers, toNull);
+  cmdTesting(answers, toNull);
 
   if (answers.hammer) {
     helpers.printMsg('Installing HammerJS...');
@@ -45,20 +50,6 @@ const cp = require('child_process');
     }
     prependFile('src/main.ts', "import 'hammerjs';", () => {});
     helpers.printDone('Installing HammerJS...');
-  }
-
-  if (answers.git) {
-    let gitLink;
-    if (answerGitHub.gitPath) gitLink = answerGitHub.gitPath;
-    if (answerGitLab.gitPath) gitLink = answerGitLab.gitPath;
-    if (answerBitBucket.gitPath) gitLink = answerBitBucket.gitPath;
-
-    helpers.printMsg('Linking to git...');
-    cp.execSync(`git add . > ${toNull}`);
-    cp.execSync(`git commit -m 'first commit' > ${toNull}`);
-    cp.execSync(`git remote add origin ${gitLink} > ${toNull}`);
-    cp.execSync(`git push -u origin master > ${toNull}`);
-    helpers.printDone('Linking to git...');
   }
 
   helpers.printMsg('Configuring TSLint...');
@@ -73,6 +64,10 @@ const cp = require('child_process');
     });
   }
   helpers.printDone('Configuring TSLint...');
+
+  if (answers.git) {
+    cmdGit(answers, gitLink, toNull, gitName);
+  }
 
   process.stdout.write(
     `Done in ${(Math.round((Date.now() - startTime) / 1000) / 60).toFixed(

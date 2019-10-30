@@ -5,7 +5,7 @@ const helpers = require('./helpers');
 
 const rimraf = require('rimraf');
 
-module.exports = function(answers) {
+module.exports = function(answers, toNull) {
   if (answers.testFrame) {
     helpers.printMsg('Removing Karma and Jasmine...');
     if (answers.yarn) {

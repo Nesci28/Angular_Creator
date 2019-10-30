@@ -3,7 +3,7 @@ const fs = require('fs');
 
 const helpers = require('./helpers');
 
-module.exports = function(answers) {
+module.exports = function(answers, toNull) {
   if (answers.themeFrame === 'Bootstrap') {
     helpers.printMsg('Installing Bootstrap...');
     if (answers.yarn) {

@@ -3,6 +3,17 @@ inquirer.registerPrompt('directory', require('inquirer-select-directory'));
 const axios = require('axios');
 
 module.exports = {
+  gitName: async answers => {
+    const gitName = await inquirer.prompt([
+      {
+        type: 'text',
+        name: 'gitRepoName',
+        message: 'What name do you want for your new repo ? 💌 ',
+        default: answers.name,
+      },
+    ]);
+    return gitName;
+  },
   gitHub: async username => {
     const gitPath = await inquirer.prompt([
       {

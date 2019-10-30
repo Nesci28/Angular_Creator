@@ -3,7 +3,7 @@ const path = require('path');
 
 const helpers = require('./helpers');
 
-module.exports = function(answers) {
+module.exports = function(answers, toNull) {
   // Generating the command
   let angularNewCommand = `ng new ${answers.name}`;
   if (answers.routing) angularNewCommand += ` --routing=true`;

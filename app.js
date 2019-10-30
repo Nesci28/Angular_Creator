@@ -388,7 +388,7 @@ const tslint = {
   if (answers.testFrame) {
     printMsg('Removing Karma and Jasmine...');
     cp.execSync(
-      `npm uninstall karma karma-chrome-launcher karma-coverage-istanbul-reporter karma-jasmine karma-jasmine-html-reporter @types/jasmine @types/jasminewd2 jasmine-core jasmine-spec-reporter protractor > ${toNull}`
+      `npm prune karma karma-chrome-launcher karma-coverage-istanbul-reporter karma-jasmine karma-jasmine-html-reporter @types/jasmine @types/jasminewd2 jasmine-core jasmine-spec-reporter protractor --save-dev > ${toNull}`
     );
     printDone('Removing Karma and Jasmine...');
     printMsg('Installing Jest...');
@@ -452,10 +452,10 @@ const tslint = {
       printDone('git is not installed...');
     }
     if (!!version) {
-      cp.execSync(`git remote add origin ${answers.gitLink}`);
       cp.execSync(`git add .`);
       cp.execSync(`git commit -m 'first commit'`);
-      cp.execSync(`git push`);
+      cp.execSync(`git remote add origin ${answers.gitLink}`);
+      cp.execSync(`git push -u origin master`);
     }
     printDone('Linkining to git ...');
   }

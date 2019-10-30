@@ -1,6 +1,6 @@
-**/
 .package-lock.json
 angular_creator.sh
 *.env
 test.js
 *.png
+node_modules/

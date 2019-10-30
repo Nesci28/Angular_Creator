@@ -12,8 +12,8 @@ const tslintSrc = {
   extends: '../tslint.json',
   rules: {
     'directive-selector': [true, 'attribute', 'app', 'camelCase'],
-    'component-selector': [true, 'element', 'app', 'kebab-case']
-  }
+    'component-selector': [true, 'element', 'app', 'kebab-case'],
+  },
 };
 
 const tslint = {
@@ -25,7 +25,7 @@ const tslint = {
     'comment-format': [true, 'check-space'],
     curly: true,
     deprecation: {
-      severity: 'warn'
+      severity: 'warn',
     },
     eofline: true,
     forin: true,
@@ -43,9 +43,9 @@ const tslint = {
           'static-field',
           'instance-field',
           'static-method',
-          'instance-method'
-        ]
-      }
+          'instance-method',
+        ],
+      },
     ],
     'no-arg': true,
     'no-bitwise': true,
@@ -75,7 +75,7 @@ const tslint = {
       'check-open-brace',
       'check-catch',
       'check-else',
-      'check-whitespace'
+      'check-whitespace',
     ],
     'prefer-const': true,
     quotemark: [true, 'single'],
@@ -89,8 +89,8 @@ const tslint = {
         'index-signature': 'nospace',
         parameter: 'nospace',
         'property-declaration': 'nospace',
-        'variable-declaration': 'nospace'
-      }
+        'variable-declaration': 'nospace',
+      },
     ],
     'unified-signatures': true,
     'variable-name': false,
@@ -100,7 +100,7 @@ const tslint = {
       'check-decl',
       'check-operator',
       'check-separator',
-      'check-type'
+      'check-type',
     ],
     'no-output-on-prefix': true,
     'use-input-property-decorator': true,
@@ -113,8 +113,8 @@ const tslint = {
     'component-class-suffix': true,
     'directive-class-suffix': true,
     'no-implicit-dependencies': [true, 'dev'],
-    'no-provided-in-root': true
-  }
+    'no-provided-in-root': true,
+  },
 };
 
 (async () => {
@@ -134,62 +134,62 @@ const tslint = {
       default: 'latest',
       filter: t => {
         return t === '5' ? '1' : t;
-      }
+      },
     },
     {
       type: 'text',
       name: 'name',
-      message: 'Project Name? 🤔 (non alpha characters will be stripped out)\n',
+      message:
+        'Project Name ? 🤔 (non alpha characters will be stripped out)\n',
       filter: t => {
         return t.replace(/[^a-zA-Z-]/g, '');
-      }
+      },
     },
     {
       type: 'directory',
       name: 'path',
-      message:
-        'Do you want a specific directory? if so please specify it: 📁\n',
-      basePath: `${__dirname}`
+      message: 'Do you want a specific directory ? 📁\n',
+      basePath: `${__dirname}`,
     },
     {
       type: 'confirm',
       name: 'routing',
-      message: 'Do you want Routing? 🚧 ',
-      default: true
+      message: 'Do you want Routing ? 🚧 ',
+      default: true,
     },
     {
       type: 'confirm',
       name: 'fontAwesome',
-      message: 'Font Awesome icons? ⛳ ',
-      default: true
+      message: 'Font Awesome icons ? ⛳ ',
+      default: true,
     },
     {
       type: 'list',
       name: 'themeFrame',
-      message: 'Which framework theme do you want? ✒️ ',
+      message: 'Which framework theme do you want ? ✒️ ',
       choices: [
         'Bootstrap',
         'Material',
         'MDB (Material Design for Bootstrap)',
-        'None'
+        'None',
       ],
       filter: t => {
         return t === 'MDB (Material Design for Bootstrap)' ? 'MDB' : t;
-      }
+      },
     },
     {
       type: 'confirm',
       name: 'themeRes',
-      message: 'Bootswatch Theme? 🎒 ',
+      message: 'Bootswatch Theme ? 🎒 ',
       default: true,
       when: answers => {
         return answers.themeFrame === 'Bootstrap';
-      }
+      },
     },
     {
       type: 'list',
       name: 'theme',
-      message: 'Which Bootswatch Theme? 📝 ',
+      message: 'Which Bootswatch Theme ? 📝 ',
       choices: [
         'Cerulean - A calm blue sky',
         'Cosmo - An ode to Metro',
@@ -211,14 +211,14 @@ const tslint = {
         'Spacelab - Silvery and sleek',
         'Superhero - The brave and the blue',
         'United - Ubuntu orange and unique font',
-        'Yeti - A friendly foundation'
+        'Yeti - A friendly foundation',
       ],
       when: answers => {
         return answers.themeRes;
       },
       filter: t => {
         return t.split(' - ')[0].toLowerCase();
-      }
+      },
     },
     {
       type: 'list',
@@ -229,11 +229,11 @@ const tslint = {
         'indigo-pink',
         'pink-bluegrey',
         'purple-green',
-        'custom'
+        'custom',
       ],
       when: answers => {
         return answers.themeFrame === 'Material';
-      }
+      },
     },
     {
       type: 'list',
@@ -243,13 +243,13 @@ const tslint = {
       default: 'scss',
       when: answers => {
         return answers.themeFrame === 'None';
-      }
+      },
     },
     {
       type: 'confirm',
       name: 'testing',
-      message: 'Do you want Testing? ☢️ ',
-      default: true
+      message: 'Do you want Testing ? ☢️ ',
+      default: true,
     },
     {
       type: 'confirm',
@@ -259,28 +259,28 @@ const tslint = {
       default: true,
       when: answers => {
         return answers.testing;
-      }
+      },
     },
     {
       type: 'confirm',
       name: 'hammer',
       message: 'Do you want to install HammerJS ? 🔨 ',
-      default: true
+      default: true,
     },
     {
       type: 'confirm',
       name: 'git',
-      message: 'Do you want to add a git repositorie ? ☁️ ',
-      default: false
+      message: 'Do you want to add a git repository ? ☁️ ',
+      default: false,
     },
     {
       type: 'text',
       name: 'gitLink',
-      message: 'Provide a git repositorie link(ended by .git) 🔗 ',
+      message: 'Provide a git repository link(ended by .git) 🔗 ',
       when: answers => {
         return answers.git;
-      }
-    }
+      },
+    },
   ]);
 
   process.chdir(answers.path);
@@ -292,8 +292,8 @@ const tslint = {
   } else {
     angularNewCommand += ` --style=${answers.framework}`;
   }
-  if (answers.git) {
-    angularNewCommand += ` --commit`;
+  if (!answers.git) {
+    angularNewCommand += ` --commit=false`;
   }
 
   if (answers.version === 'latest') {
@@ -314,7 +314,7 @@ const tslint = {
     if (!!version) {
       printMsg('Creating the Angular App ...');
       cp.execSync(
-        `npx -p @angular/cli@${answers.version} ${angularNewCommand} > ${toNull}`
+        `npx -p @angular/cli@${answers.version} ${angularNewCommand} > ${toNull}`,
       );
     }
   }
@@ -334,15 +334,15 @@ const tslint = {
       fs.writeFileSync(
         'src/styles.scss',
         `@import "~bootswatch/dist/${theme}/variables";`,
-        () => {}
+        () => {},
       );
       fs.appendFileSync(
         'src/styles.scss',
-        `@import "~bootstrap/scss/bootstrap";`
+        `@import "~bootstrap/scss/bootstrap";`,
       );
       fs.appendFileSync(
         'src/styles.scss',
-        `@import "~bootswatch/dist/${theme}/bootswatch";`
+        `@import "~bootswatch/dist/${theme}/bootswatch";`,
       );
       printDone('Installing Bootswatch...');
     }
@@ -357,7 +357,7 @@ const tslint = {
       printMsg('Adding Material Theme...');
       prependFile(
         'src/styles.scss',
-        `@import '@angular/material/prebuilt-themes/${answers.materialTheme}.css';`
+        `@import '@angular/material/prebuilt-themes/${answers.materialTheme}.css';`,
       );
       printDone('Adding Material Theme...');
     }
@@ -375,10 +375,10 @@ const tslint = {
     fs.readFile('angular.json', (_, data) => {
       data = JSON.parse(data);
       data.projects[answers.name].architect.build.options.styles.push(
-        './node_modules/font-awesome/scss/font-awesome.scss"'
+        './node_modules/font-awesome/scss/font-awesome.scss"',
       );
       data.projects[answers.name].architect.test.options.styles.push(
-        './node_modules/font-awesome/scss/font-awesome.scss"'
+        './node_modules/font-awesome/scss/font-awesome.scss"',
       );
       fs.writeFile('angular.json', JSON.stringify(data, null, 2), () => {});
     });
@@ -388,12 +388,12 @@ const tslint = {
   if (answers.testFrame) {
     printMsg('Removing Karma and Jasmine...');
     cp.execSync(
-      `npm prune karma karma-chrome-launcher karma-coverage-istanbul-reporter karma-jasmine karma-jasmine-html-reporter @types/jasmine @types/jasminewd2 jasmine-core jasmine-spec-reporter protractor --save-dev > ${toNull}`
+      `npm prune karma karma-chrome-launcher karma-coverage-istanbul-reporter karma-jasmine karma-jasmine-html-reporter @types/jasmine @types/jasminewd2 jasmine-core jasmine-spec-reporter protractor --save-dev > ${toNull}`,
     );
     printDone('Removing Karma and Jasmine...');
     printMsg('Installing Jest...');
     cp.execSync(
-      `npm install --only=dev jest jest-preset-angular jest-canvas-mock @angular-builders/jest @types/jest > ${toNull}`
+      `npm install --only=dev jest jest-preset-angular jest-canvas-mock @angular-builders/jest @types/jest > ${toNull}`,
     );
     printDone('Installing Jest...');
     printMsg('Configuring Jest...');
@@ -403,12 +403,12 @@ const tslint = {
       setupFiles: ['jest-canvas-mock'],
       coverageReporters: ['text', 'html'],
       coveragePathIgnorePatterns: ['/node_modules/'],
-      transformIgnorePatterns: ['node_modules/(?!(ng2-charts-x)/)']
+      transformIgnorePatterns: ['node_modules/(?!(ng2-charts-x)/)'],
     };
     fs.writeFile(
       'jest.config.ts',
       `module.exports = ${JSON.stringify(obj, null, 2)}`,
-      () => {}
+      () => {},
     );
     fs.readFile('package.json', (_, data) => {
       data = JSON.parse(data);
@@ -420,8 +420,8 @@ const tslint = {
         testPathIgnorePatterns: [
           '<rootDir>/node_modules/',
           '<rootDir>/dist',
-          '<rootDir>/src/test.ts'
-        ]
+          '<rootDir>/src/test.ts',
+        ],
       };
       fs.writeFile('package.json', JSON.stringify(data, null, 2), () => {});
     });
@@ -444,27 +444,27 @@ const tslint = {
   }
 
   if (answers.git) {
-    printMsg('Linkining to git...');
+    printMsg('Linking to git...');
     let version;
     try {
       version = cp.execSync(`git --version`).toString();
     } catch (error) {
-      printDone('git is not installed...');
+      printWarning('git is not installed...');
     }
-    if (!!version) {
+    if (version) {
       cp.execSync(`git add .`);
       cp.execSync(`git commit -m 'first commit'`);
       cp.execSync(`git remote add origin ${answers.gitLink}`);
       cp.execSync(`git push -u origin master`);
     }
-    printDone('Linkining to git ...');
+    printDone('Linking to git...');
   }
 
   printMsg('Configuring TSLint...');
   fs.readFile('tslint.json', (_, data) => {
     data = JSON.parse(datadata.toString());
     data.projects[answers.name].architect.build.options.styles.push(
-      './node_modules/font-awesome/scss/font-awesome.scss"'
+      './node_modules/font-awesome/scss/font-awesome.scss"',
     );
     fs.writeFile('tslint.json', JSON.stringify(data, null, 2), () => {});
   });
@@ -477,7 +477,7 @@ const tslint = {
   printDone('Configuring TSLint...');
 
   process.stdout.write(
-    `Done in ${Math.round((Date.now() - startTime) / 1000) / 60} mins`
+    `Done in ${Math.round((Date.now() - startTime) / 1000) / 60} mins`,
   );
 })();
 
@@ -489,4 +489,10 @@ function printDone(str) {
   process.stdout.clearLine();
   process.stdout.cursorTo(0);
   process.stdout.write('✅ ' + ' - ' + clk.green(str) + '\n');
+}
+
+function printWarning(str) {
+  process.stdout.clearLine();
+  process.stdout.cursorTo(0);
+  process.stdout.write('⚠️ ' + ' - ' + clk.yellow(str) + '\n');
 }

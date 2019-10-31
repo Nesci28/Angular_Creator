@@ -1,6 +1,6 @@
 {
   "name": "angular-creator",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "Generates an Angular App easily with some options (Bootstrap, Font-Awesome, Jest, etc.)",
   "main": "src/app.js",
   "bin": {

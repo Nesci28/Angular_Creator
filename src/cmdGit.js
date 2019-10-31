@@ -1,4 +1,7 @@
+const cp = require('child_process');
 const axios = require('axios');
+
+const helpers = require('./helpers');
 
 module.exports = async function(answers, gitLink, toNull, gitName) {
   helpers.printMsg('Linking to git...');

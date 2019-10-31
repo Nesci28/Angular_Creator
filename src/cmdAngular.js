@@ -5,7 +5,7 @@ const path = require('path');
 
 const helpers = require('./helpers');
 
-module.exports = function(answers, toNull) {
+module.exports = async function(answers, toNull) {
   // Generating the command
   let angularNewCommand = `ng new ${answers.name}`;
   if (answers.routing) angularNewCommand += ` --routing=true`;
@@ -32,10 +32,7 @@ module.exports = function(answers, toNull) {
     helpers.printMsg('Creating the Angular App ...');
     cp.execSync(`${angularNewCommand} > ${toNull}`);
   } else {
-    let version;
-    try {
-      version = cp.execSync(`npx -version`).toString();
-    } catch (error) {
+    if (!helpers.testForApp('npx')) {
       helpers.printMsg('Installing NPX...');
       if (answers.yarn) {
         cp.execSync(`yarn global add npx > ${toNull}`);
@@ -44,16 +41,14 @@ module.exports = function(answers, toNull) {
       }
       helpers.printDone('Installing NPX...');
     }
-    if (version) {
-      helpers.printMsg('Creating the Angular App ...');
-      if (answers.yarn) helpers.printWarning('Using NPX');
-      cp.execSync(
-        `npx -p @angular/cli@${answers.version} ${angularNewCommand} > ${toNull}`,
-      );
-    }
+    helpers.printMsg('Creating the Angular App...');
+    helpers.printWarning('Using NPX');
+    cp.execSync(
+      `npx -p @angular/cli@${answers.version} ${angularNewCommand} > ${toNull}`,
+    );
   }
 
-  helpers.printDone('Creating the Angular App ...');
+  helpers.printDone('Creating the Angular App...');
   process.chdir(path.join(answers.path, answers.name));
 
   helpers.printMsg('Installing Angular dependancies...');

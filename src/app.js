@@ -16,7 +16,7 @@ const fs = require('fs');
 const cp = require('child_process');
 
 async function main() {
-  const answers = await promptMain();
+  const answers = await promptMain(helpers);
 
   let gitName;
   if (answers.git && answers.gitProvider === 'GitHub' && answers.gitNew) {
@@ -37,11 +37,12 @@ async function main() {
   const startTime = Date.now();
   const toNull = process.platform === 'win32' ? 'nul 2>&1' : '/dev/null 2>&1';
 
+  fs.writeFile('config.json', JSON.stringify(answers, null, 2), () => {});
   process.chdir(answers.path);
 
-  cmdAngular(answers, toNull);
-  cmdTheme(answers, toNull);
-  cmdTesting(answers, toNull);
+  await cmdAngular(answers, toNull);
+  await cmdTheme(answers, toNull);
+  await cmdTesting(answers, toNull);
 
   if (answers.hammer) {
     helpers.printMsg('Installing HammerJS...');
@@ -68,7 +69,7 @@ async function main() {
   helpers.printDone('Configuring TSLint...');
 
   if (answers.git) {
-    cmdGit(answers, gitLink, toNull, gitName);
+    await cmdGit(answers, gitLink, toNull, gitName);
   }
 
   process.stdout.write(

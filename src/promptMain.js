@@ -1,6 +1,7 @@
 const inquirer = require('inquirer');
 inquirer.registerPrompt('directory', require('inquirer-select-directory'));
-const cp = require('child_process');
+
+const helpers = require('./helpers');
 
 module.exports = async function() {
   return await inquirer.prompt([
@@ -19,7 +20,7 @@ module.exports = async function() {
       name: 'yarn',
       message: 'Do you want to use Yarn instead of NPM ? 🧠 ',
       default: true,
-      when: testForYarn(),
+      when: testForApp('Yarn'),
     },
     {
       type: 'text',
@@ -158,7 +159,7 @@ module.exports = async function() {
       name: 'git',
       message: 'Will you be using Git ? ☁️ ',
       default: false,
-      when: testForGit(),
+      when: testForApp('Git'),
     },
     {
       type: 'list',
@@ -209,20 +210,6 @@ module.exports = async function() {
   ]);
 };
 
-function testForYarn() {
-  try {
-    cp.execSync('yarn --version').toString();
-    return true;
-  } catch {
-    return false;
-  }
-}
-
-function testForGit() {
-  try {
-    cp.execSync('git --version').toString();
-    return true;
-  } catch {
-    return false;
-  }
+function testForApp(app) {
+  helpers.testForApp(app);
 }

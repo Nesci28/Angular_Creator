@@ -14,4 +14,13 @@ module.exports = {
     process.stdout.cursorTo(0);
     process.stdout.write('⚠️ ' + ' - ' + clk.yellow(str) + '\n');
   },
+  testForApp: appToTest => {
+    const toNull = process.platform === 'win32' ? 'nul 2>&1' : '/dev/null 2>&1';
+    try {
+      cp.execSync(`${appToTest} --version > ${toNull}`);
+      return true;
+    } catch {
+      return false;
+    }
+  },
 };

@@ -4,3 +4,4 @@ angular_creator.sh
 test.js
 *.png
 node_modules/
+config.json

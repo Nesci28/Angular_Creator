@@ -1,4 +1,5 @@
 const clk = require('chalk');
+const cp = require('child_process');
 
 module.exports = {
   printMsg: str => {
@@ -19,7 +20,7 @@ module.exports = {
     try {
       cp.execSync(`${appToTest} --version > ${toNull}`);
       return true;
-    } catch {
+    } catch (_) {
       return false;
     }
   },

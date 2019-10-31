@@ -20,7 +20,9 @@ module.exports = async function(answers, toNull) {
     helpers.printDone('Removing Karma and Jasmine...');
     helpers.printMsg('Installing Jest...');
     if (answers.yarn) {
-      `yarn install -D jest jest-preset-angular jest-canvas-mock @angular-builders/jest @types/jest > ${toNull}`;
+      cp.execSync(
+        `yarn add -D jest jest-preset-angular jest-canvas-mock @angular-builders/jest @types/jest > ${toNull}`,
+      );
     } else {
       cp.execSync(
         `npm install --save-dev jest jest-preset-angular jest-canvas-mock @angular-builders/jest @types/jest > ${toNull}`,

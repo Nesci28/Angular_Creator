@@ -9,6 +9,8 @@ const cmdTesting = require('./cmdTesting');
 const cmdGit = require('./cmdGit');
 
 const helpers = require('./helpers');
+const tslint = require('./tslint');
+const tslintSrc = require('./tslintSrc');
 
 const prependFile = require('prepend-file');
 
@@ -47,7 +49,7 @@ async function main() {
   if (answers.hammer) {
     helpers.printMsg('Installing HammerJS...');
     if (answers.yarn) {
-      cp.execSync(`yarn install hammerjs > ${toNull}`);
+      cp.execSync(`yarn add hammerjs > ${toNull}`);
     } else {
       cp.execSync(`npm install hammerjs > ${toNull}`);
     }

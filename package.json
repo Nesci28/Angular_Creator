@@ -1,10 +1,11 @@
 {
   "name": "angular-creator",
-  "version": "1.0.9",
+  "version": "1.1.0",
   "description": "Generates an Angular App easily with some options (Bootstrap, Font-Awesome, Jest, etc.)",
   "main": "src/app.js",
   "bin": {
-    "ag": "src/app.js"
+    "ac": "src/app.js",
+    "angular-creator": "src/app.js"
   },
   "repository": {
     "type": "git",

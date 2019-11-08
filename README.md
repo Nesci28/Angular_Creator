@@ -3,8 +3,8 @@
 Save hundred of thousands of hours (ok just kidding...) but some documentation research here and there and some time, for a tedious job which is creating a new Angular App with the necessary dependancies. This CLI tool will ask you the questions and generate an App depending on the answers.
 
 ```
-to install: npm install -g angular-generator
-command to run: ag
+to install: npm install -g angular-creator
+command to run: ac || angular-creator
 ```
 
 [![ex.png](https://i.postimg.cc/xdPgr6nR/ex.png)](https://postimg.cc/Mcv1VbcM)

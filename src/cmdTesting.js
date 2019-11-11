@@ -38,10 +38,9 @@ module.exports = async function(answers, toNull) {
       coveragePathIgnorePatterns: ['/node_modules/'],
       transformIgnorePatterns: ['node_modules/(?!(ng2-charts-x)/)'],
     };
-    fs.writeFile(
+    fs.writeFileSync(
       'jest.config.ts',
       `module.exports = ${JSON.stringify(obj, null, 2)}`,
-      () => {},
     );
     fs.readFile('package.json', (_, data) => {
       data = JSON.parse(data);
@@ -56,15 +55,16 @@ module.exports = async function(answers, toNull) {
           '<rootDir>/src/test.ts',
         ],
       };
-      fs.writeFile('package.json', JSON.stringify(data, null, 2), () => {});
+      fs.writeFileSync('package.json', JSON.stringify(data, null, 2));
     });
     fs.unlink('karma.conf.js', (_, __) => {});
     fs.unlink('src/test.js', (_, __) => {});
     rimraf('e2e', _ => {});
     fs.readFile('angular.json', (_, data) => {
       data = JSON.parse(data);
-      delete data.test;
-      fs.writeFile('angular.json', JSON.stringify(data, null, 2), () => {});
+      delete data.projects[answers.name].architect.test;
+      delete data.projects[answers.name].architect.e2e;
+      fs.writeFileSync('angular.json', JSON.stringify(data, null, 2));
     });
     helpers.printDone('Configuring Jest...');
   }

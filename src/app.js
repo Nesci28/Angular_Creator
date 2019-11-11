@@ -39,7 +39,7 @@ async function main() {
   const startTime = Date.now();
   const toNull = process.platform === 'win32' ? 'nul 2>&1' : '/dev/null 2>&1';
 
-  fs.writeFile('config.json', JSON.stringify(answers, null, 2), () => {});
+  fs.writeFileSync('config.json', JSON.stringify(answers, null, 2));
   process.chdir(answers.path);
 
   await cmdAngular(answers, toNull);
@@ -60,12 +60,12 @@ async function main() {
   helpers.printMsg('Configuring TSLint...');
   fs.readFile('tslint.json', (_, data) => {
     data = tslint;
-    fs.writeFile('tslint.json', JSON.stringify(data, null, 2), () => {});
+    fs.writeFileSync('tslint.json', JSON.stringify(data, null, 2));
   });
   if (fs.existsSync('src/tslint.json')) {
     fs.readFile('./src/tslint.json', (_, data) => {
       data = tslintSrc;
-      fs.writeFile('src/tslint.json', JSON.stringify(data, null, 2), () => {});
+      fs.writeFileSync('src/tslint.json', JSON.stringify(data, null, 2));
     });
   }
   helpers.printDone('Configuring TSLint...');

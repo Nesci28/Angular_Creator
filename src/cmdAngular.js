@@ -53,9 +53,9 @@ module.exports = async function(answers, toNull) {
 
   helpers.printMsg('Installing Angular dependancies...');
   if (answers.yarn) {
-    cp.execSync('yarn install');
+    cp.execSync(`yarn install > ${toNull}`);
   } else {
-    cp.execSync('npm install');
+    cp.execSync(`npm install > ${toNull}`);
   }
   helpers.printDone('Installing Angular dependancies...');
 };

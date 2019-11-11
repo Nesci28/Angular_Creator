@@ -14,7 +14,7 @@ module.exports = async function(answers, toNull) {
     cp.execSync(`ng add ngx-bootstrap > ${toNull}`);
     helpers.printDone('Installing Bootstrap...');
 
-    if (answers.themRes) {
+    if (answers.themeRes) {
       helpers.printMsg('Installing Bootswatch...');
       if (answers.yarn) {
         cp.execSync(`yarn add bootswatch > ${toNull}`);
@@ -23,16 +23,15 @@ module.exports = async function(answers, toNull) {
       }
       fs.writeFileSync(
         'src/styles.scss',
-        `@import "~bootswatch/dist/${theme}/variables";`,
-        () => {},
+        `@import "~bootswatch/dist/${answers.theme}/variables";\n`,
       );
       fs.appendFileSync(
         'src/styles.scss',
-        `@import "~bootstrap/scss/bootstrap";`,
+        `@import "~bootstrap/scss/bootstrap";\n`,
       );
       fs.appendFileSync(
         'src/styles.scss',
-        `@import "~bootswatch/dist/${theme}/bootswatch";`,
+        `@import "~bootswatch/dist/${answers.theme}/bootswatch";\n`,
       );
       helpers.printDone('Installing Bootswatch...');
     }
@@ -69,12 +68,12 @@ module.exports = async function(answers, toNull) {
     fs.readFile('angular.json', (_, data) => {
       data = JSON.parse(data);
       data.projects[answers.name].architect.build.options.styles.push(
-        './node_modules/font-awesome/scss/font-awesome.scss"',
+        './node_modules/font-awesome/scss/font-awesome.scss',
       );
       data.projects[answers.name].architect.test.options.styles.push(
-        './node_modules/font-awesome/scss/font-awesome.scss"',
+        './node_modules/font-awesome/scss/font-awesome.scss',
       );
-      fs.writeFile('angular.json', JSON.stringify(data, null, 2), () => {});
+      fs.writeFileSync('angular.json', JSON.stringify(data, null, 2));
     });
     helpers.printDone('Installing Font Awesome...');
   }

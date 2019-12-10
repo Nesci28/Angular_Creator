@@ -12,7 +12,7 @@ command to run: ac || angular-creator
 #### Todo
 
 - [x] Angular Version picker
-      [ ] Limit with user's Node version
+  - [ ] Limit with user's Node version
 - [x] Option to use Yarn instead of Npm
 - [x] Option to add Material to the project
   - [x] Choose which theme

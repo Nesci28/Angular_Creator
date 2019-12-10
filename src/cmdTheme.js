@@ -65,16 +65,28 @@ module.exports = async function(answers, toNull) {
     } else {
       cp.execSync(`npm install font-awesome > ${toNull}`);
     }
-    fs.readFile('angular.json', (_, data) => {
-      data = JSON.parse(data);
-      data.projects[answers.name].architect.build.options.styles.push(
-        './node_modules/font-awesome/scss/font-awesome.scss',
-      );
-      data.projects[answers.name].architect.test.options.styles.push(
-        './node_modules/font-awesome/scss/font-awesome.scss',
-      );
-      fs.writeFileSync('angular.json', JSON.stringify(data, null, 2));
-    });
+    fs.writeFileSync('src/index.html', html);
     helpers.printDone('Installing Font Awesome...');
   }
 };
+
+const html = `<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>CodeWars</title>
+    <base href="/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.2.0/css/all.css"
+      integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <app-root></app-root>
+  </body>
+</html>
+`;

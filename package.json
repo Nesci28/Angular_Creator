@@ -25,7 +25,7 @@
   },
   "homepage": "https://github.com/Nesci28/Angular_Creator#readme",
   "dependencies": {
-    "axios": "^0.19.0",
+    "axios": "^0.21.1",
     "chalk": "^2.4.2",
     "inquirer": "^7.0.0",
     "inquirer-select-directory": "^1.2.0",
